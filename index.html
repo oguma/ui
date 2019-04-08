@@ -17,14 +17,14 @@
         <script>
           var link = document.createElement('link');
           link.setAttribute('rel', 'stylesheet');
-          link.setAttribute('href', '/app/ui.css?' + new Date().getTime());
+          link.setAttribute('href', 'app/ui.css?' + new Date().getTime());
           document.getElementsByTagName('head')[0].appendChild(link);
         </script>
         <script>
           window.onload = function() {
-            var loc = location.protocol + "//" + location.host;
-            var sef = loc + "/app/ui.xml?" + new Date().getTime();
-            var xml = loc + "/data/" + getParameterByName('file') + "?" + new Date().getTime();
+            var loc = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname;
+            var sef = loc + "app/ui.xml?" + new Date().getTime();
+            var xml = loc + "data/" + getParameterByName('file') + "?" + new Date().getTime();
             SaxonJS.transform({
               stylesheetLocation: sef,
               sourceLocation: xml
