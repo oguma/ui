@@ -1,0 +1,124 @@
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+}
+
+svg {
+  display: block;
+}
+
+header, footer {
+  background-color: #eee;
+}
+
+p, pre {
+  margin: 0.5em 0;
+  font-family: monospace;
+}
+
+pre {
+  border: 1px solid khaki;
+}
+
+a {
+  margin-bottom: 1em;
+  margin-right: 6px;
+}
+a:link, a:active, a:visited, a:hover {
+  color: blue;
+}
+
+div {
+  padding: 1em;
+  margin: 0;
+}
+
+div.middle {
+  display: flex;
+  padding: 0;
+}
+div .middle > div {
+  padding: 0;
+}
+
+div.center {
+  flex-grow: 1;
+}
+
+ul {
+  margin-top: 0;
+  padding: 0 1em;
+}
+li {
+  /*list-style-type: none;*/
+  margin: 4px 2px;
+}
+
+ul.allpages {
+  margin-left: 1em;
+}
+ul.allpages li {
+  margin-left: 1em;
+  list-style-type: square;
+}
+
+.base {
+  border: 1px solid tomato;
+}
+
+.page {
+  border: 1px solid #000;
+}
+
+.sect {
+  border: 1px dashed #ccc;
+}
+
+.story-tree {
+  border: 1px dashed #ccc;
+  background-color: #f9f9f9;
+}
+
+.g-story {
+  border: 1px solid #ccc;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  background-color: #f9f9f9;
+}
+
+.g-story > h3 {
+  font-style: italic;
+}
+
+.story {
+  border: 1px solid #ccc666;
+  margin: 1em 0;
+  background-color: #ffffda;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 1em;
+  border-style: solid;
+  border-width : 1px 1px 1px 1px;
+  text-decoration : none;
+  padding : 2px 6px;
+  border-radius: 5px;
+  border-color : #000000;
+}
+
+#baseset, #pageset {
+  display: none;
+}
+
+#debug {
+  padding: 0;
+  background-color: pink;
+}
+
+#screen {
+  background-color: #ffffda;
+}

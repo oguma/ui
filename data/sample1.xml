@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../app/ui.xsd">
+    <baseset>
+        <base id="anonymous"></base>
+    </baseset>
+    <pageset>
+        <page id="index" label="Index">
+            <text>Index</text>
+        </page>
+    </pageset>
+</ui>

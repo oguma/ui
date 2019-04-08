@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="app/Saxon-JS-1.2.0/SaxonJS.min.js"></script>
+        <script>
+          // https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+          function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+              results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+          }
+        </script>
+        <script>
+          var link = document.createElement('link');
+          link.setAttribute('rel', 'stylesheet');
+          link.setAttribute('href', '/app/ui.css?' + new Date().getTime());
+          document.getElementsByTagName('head')[0].appendChild(link);
+        </script>
+        <script>
+          window.onload = function() {
+            var loc = location.protocol + "//" + location.host;
+            var sef = loc + "/app/ui.xml?" + new Date().getTime();
+            var xml = loc + "/data/" + getParameterByName('file') + "?" + new Date().getTime();
+            SaxonJS.transform({
+              stylesheetLocation: sef,
+              sourceLocation: xml
+            });
+          };
+        </script>
+    </head>
+    <body>
+        <div id="debug"></div>
+        <div id="screen"></div>
+        <div id="baseset"></div>
+        <div id="pageset"></div>
+        <div style="text-align: right; padding: 0;">
+            <a href="#index">#index</a>
+            <a href="#_allpages">_allpages</a>
+            <a href="#_stories">_stories</a>
+        </div>
+    </body>
+</html>

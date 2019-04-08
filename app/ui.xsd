@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <xs:complexType name="content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="form"/>
+      <xs:element ref="text"/>
+      <xs:element ref="linkset"/>
+      <xs:element ref="link"/>
+      <xs:element ref="grid"/>
+      <xs:element ref="sect"/>
+      <xs:element ref="pict"/>
+      <xs:element ref="svg"/>
+    </xs:choice>
+  </xs:complexType>
+  
+  <xs:complexType name="g-page">
+    <xs:annotation><xs:documentation>Page group</xs:documentation></xs:annotation>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="g" type="g-page"/>
+      <xs:element ref="page"/>
+    </xs:choice>
+    <xs:attribute name="base-ref" type="xs:NCName"/>
+    <xs:attribute name="note" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="g-story">
+    <xs:annotation><xs:documentation>Story group</xs:documentation></xs:annotation>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="g" type="g-story"/>
+      <xs:element ref="story"/>
+    </xs:choice>
+    <xs:attribute name="note" use="optional"/>
+  </xs:complexType>
+  
+  <xs:element name="ui">
+    <xs:annotation><xs:documentation>Root</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="baseset" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="pageset" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="storyset" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:unique name="base-id">
+      <xs:selector xpath="baseset/base"/>
+      <xs:field xpath="@id"/>
+    </xs:unique>
+    <xs:unique name="page-id">
+      <xs:selector xpath="pageset/page"/>
+      <xs:field xpath="@id"/>
+    </xs:unique>
+  </xs:element>
+  
+  <xs:element name="baseset">
+    <xs:annotation><xs:documentation>Base set</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="base"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="pageset">
+    <xs:annotation><xs:documentation>Page set</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="g" type="g-page"/>
+        <xs:element ref="page"/>
+      </xs:choice>
+      <!-- <xs:assert test="count(page[@id = 'index']) = 1"/> XML Schema 1.1 -->
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="storyset">
+    <xs:annotation><xs:documentation>Story set</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="g" type="g-story"/>
+        <xs:element ref="story"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="base">
+    <xs:annotation><xs:documentation>Base</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="head" type="content">
+          <xs:annotation><xs:documentation>Header</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="left" type="content">
+          <xs:annotation><xs:documentation>Left navi.</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="right" type="content">
+          <xs:annotation><xs:documentation>Right navi.</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="foot" type="content">
+          <xs:annotation><xs:documentation>Footer</xs:documentation></xs:annotation>
+        </xs:element>
+      </xs:all>
+      <xs:attribute name="id" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="page">
+    <xs:annotation><xs:documentation>Page</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="content">
+          <xs:attribute name="id" use="required" type="xs:ID"/>
+          <xs:attribute name="label" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="linkset">
+    <xs:annotation><xs:documentation>Link set</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="link"/>
+      </xs:sequence>
+      <xs:attribute name="label" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="link">
+    <xs:annotation><xs:documentation>Link</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:attribute name="page-ref" type="xs:IDREF" use="required"/>
+      <xs:attribute name="label" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="text" type="xs:string">
+    <xs:annotation><xs:documentation>Text</xs:documentation></xs:annotation>
+  </xs:element>
+  
+  <xs:element name="pict" type="xs:string">
+    <xs:annotation><xs:documentation>Email body, Ascii art, etc...</xs:documentation></xs:annotation>
+  </xs:element>
+  
+  <xs:element name="form">
+    <xs:annotation><xs:documentation>Form</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element maxOccurs="unbounded" ref="input"/>
+        <xs:element maxOccurs="unbounded" ref="link"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="input">
+    <xs:annotation><xs:documentation>Input form</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:attribute name="label" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="grid" type="content">
+    <xs:annotation><xs:documentation>Grid, table</xs:documentation></xs:annotation>
+  </xs:element>
+  
+  <xs:element name="sect">
+    <xs:annotation><xs:documentation>Section</xs:documentation></xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="content">
+          <xs:attribute name="label" use="optional"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="svg">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:anyAttribute processContents="skip"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="story">
+    <xs:annotation><xs:documentation>Story</xs:documentation></xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <!--<xs:attribute name="id" use="required" type="xs:ID"/>-->
+      <xs:attribute name="label" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
